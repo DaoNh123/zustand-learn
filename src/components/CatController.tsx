@@ -1,5 +1,5 @@
 
-import { shallow, useShallow } from "zustand/shallow";
+import { useShallow } from "zustand/shallow";
 import { useCatStore } from "../stores/catStore";
 
 export const CatController = () => {

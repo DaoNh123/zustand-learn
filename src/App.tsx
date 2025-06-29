@@ -9,7 +9,9 @@ function App() {
     <div className="container">
       <h1>Zustand Tutorial</h1>
       <div>
-        {/* <BearBox/> */}
+        <BearBox/>
+      </div>
+      <div>
         <CatBox/>
         <CatBox2/>
         <CatController/>
