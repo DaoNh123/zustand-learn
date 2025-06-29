@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useCatStore } from '../stores/catStore'
 
 export const CatBox = () => {
@@ -7,6 +7,9 @@ export const CatBox = () => {
 
     const increaseBigCats = useCatStore((state) => state.increaseBigCats)
     const increaseSmallCats = useCatStore((state) => state.increaseSmallCats)
+    const summary = useCatStore((state) => state.summary());
+
+    console.log(summary);
 
   return (
     <div className='box'>
