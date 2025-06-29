@@ -8,7 +8,7 @@ type TBearStoreState = {
 }
 
 export const useBearStore = create<TBearStoreState>()((set) => ({
-  bears: 0,
+  bears: 0,     // initial value
   increasePopulation: () => set((state) => ({ 
     bears: state.bears + 1 
   })),
