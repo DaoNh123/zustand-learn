@@ -12,7 +12,8 @@ export const BearBox = () => {
     // The second kind of syntax to write
     const {bears, increasePopulation, removeAllBears} = useBearStore();
 
-    const [bgColor, setBgColor] = useState<"lightgreen" | "lightpink" | undefined>(undefined)
+    const [bgColor, setBgColor] = useState<"lightgreen" | "lightpink" | undefined
+    >(useFoodStore.getState().fish > 5 ? "lightgreen": "lightpink")
 
     // using variable like this create unneccessary re-renders
     // const fish = useFoodStore(state => state.fish);
@@ -30,13 +31,13 @@ export const BearBox = () => {
 
       // Solution 2: using with "subscribeWithSelector" in foodStore.ts
       const unsub = useFoodStore.subscribe(state => state.fish, (fish, prevFish) => {
-        if(fish == prevFish){
-          if(fish <= 5){
-            setBgColor("lightpink");
-          }else {
-            setBgColor("lightgreen");
-          }
-        }
+        // if(fish == prevFish){
+        //   if(fish <= 5){
+        //     setBgColor("lightpink");
+        //   }else {
+        //     setBgColor("lightgreen");
+        //   }
+        // }
 
         if(prevFish <= 5 && fish > 5){
           setBgColor("lightgreen")
