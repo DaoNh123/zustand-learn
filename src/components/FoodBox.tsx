@@ -1,7 +1,15 @@
+import { shallow } from "zustand/shallow";
 import { useFoodStore } from "../stores/foodStore";
 
 export const FoodBox = () => {
-  const { fish, addOneFish, removeOneFish, removeAllFish } = useFoodStore();
+    // "fish" here is reactive so it will change when anything of state change
+//   const { fish, addOneFish, removeOneFish, removeAllFish } = useFoodStore();
+
+    const fish = useFoodStore.getState().fish // non-reactive => value doesn't change when states change
+    
+    const addOneFish = useFoodStore((state) => state.addOneFish) 
+    const removeOneFish = useFoodStore((state) => state.removeOneFish) 
+    const removeAllFish = useFoodStore((state) => state.removeAllFish) 
 
   const add5Fish = () => {
     useFoodStore.setState((state) => ({
