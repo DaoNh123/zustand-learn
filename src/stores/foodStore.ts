@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
 
 type TFoodStoreState = {
     fish: number;
@@ -7,7 +8,8 @@ type TFoodStoreState = {
     removeAllFish: () => void;
 }
 
-export const useFoodStore = create<TFoodStoreState>()((set) => ({
+export const useFoodStore = create<TFoodStoreState>()(
+    subscribeWithSelector((set) => ({
     fish: 0,
     addOneFish: () => set((state) => ({fish: state.fish + 1})),
     removeOneFish: () => {
@@ -16,4 +18,4 @@ export const useFoodStore = create<TFoodStoreState>()((set) => ({
     removeAllFish: () => {
         set({fish: 0});
     }
-}));
+})));

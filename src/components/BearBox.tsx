@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useBearStore } from "../stores/bearStore"
 import { useFoodStore } from "../stores/foodStore";
+import { shallow } from "zustand/shallow";
 
 export const BearBox = () => {
     // The first kind of syntax to write
@@ -11,20 +12,40 @@ export const BearBox = () => {
     // The second kind of syntax to write
     const {bears, increasePopulation, removeAllBears} = useBearStore();
 
-    const [bgColor, setBgColor] = useState<"lightgreen" | "lightpink">("lightpink")
+    const [bgColor, setBgColor] = useState<"lightgreen" | "lightpink" | undefined>(undefined)
 
     // using variable like this create unneccessary re-renders
     // const fish = useFoodStore(state => state.fish);
 
     useEffect(() => {
-      const unsub = useFoodStore.subscribe((state, prevState) => {
-        console.log(state, prevState);
+      // const unsub = useFoodStore.subscribe((state, prevState) => {
+      //   console.log(state, prevState);
 
-        if(prevState.fish <= 5 && state.fish > 5){
-          setBgColor("lightgreen");
-        } else if(prevState.fish > 5 && state.fish <= 5){
-          setBgColor("lightpink");
+      //   if(prevState.fish <= 5 && state.fish > 5){
+      //     setBgColor("lightgreen");
+      //   } else if(prevState.fish > 5 && state.fish <= 5){
+      //     setBgColor("lightpink");
+      //   }
+      // })
+
+      // Solution 2: using with "subscribeWithSelector" in foodStore.ts
+      const unsub = useFoodStore.subscribe(state => state.fish, (fish, prevFish) => {
+        if(fish == prevFish){
+          if(fish <= 5){
+            setBgColor("lightpink");
+          }else {
+            setBgColor("lightgreen");
+          }
         }
+
+        if(prevFish <= 5 && fish > 5){
+          setBgColor("lightgreen")
+        } else if(prevFish > 5 && fish <= 5){
+          setBgColor("lightpink");
+        } 
+      }, {
+        equalityFn: shallow,    
+        fireImmediately: true,  // tell this "suubcribe" work for the first render
       })
       return unsub;
     }, []);
